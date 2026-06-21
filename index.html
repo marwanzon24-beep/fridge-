@@ -1,0 +1,116 @@
+<!DOCTYPE html><html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>الثلاجة الذكية</title><style>
+body{
+  font-family: Arial;
+  background: #fff8b3;
+  text-align: center;
+}
+
+.page{
+  display:none;
+}
+
+.active{
+  display:block;
+}
+
+textarea{
+  width:80%;
+  height:120px;
+  margin:10px;
+  padding:10px;
+  border-radius:10px;
+}
+
+button{
+  padding:10px 15px;
+  margin:5px;
+  border:none;
+  border-radius:10px;
+  background:#ffd633;
+  cursor:pointer;
+}
+
+nav{
+  margin:15px;
+}
+</style></head><body><!-- تسجيل الدخول --><div id="login">
+  <h2>🔐 ادخل الباسورد</h2>
+  <input type="password" id="pass">
+  <br><br>
+  <button onclick="login()">دخول</button>
+</div><!-- التطبيق --><div id="app" style="display:none;"><h2>🧊 التلاجة</h2><nav>
+  <button onclick="showPage('p1')">رف 1</button>
+  <button onclick="showPage('p2')">رف 2</button>
+  <button onclick="showPage('p3')">رف 3</button>
+  <button onclick="showPage('p4')">الأكل الأساسي</button>
+  <button onclick="showPage('veg')">الخضروات</button>
+  <button onclick="showPage('fruit')">الفواكه</button>
+  <button onclick="showPage('need')">المطلوب</button>
+  <button onclick="showPage('med')">الأدوية</button>
+</nav><div id="p1" class="page active">
+  <h3>رف 1</h3>
+  <textarea oninput="save('p1')" id="p1data"></textarea>
+</div><div id="p2" class="page">
+  <h3>رف 2</h3>
+  <textarea oninput="save('p2')" id="p2data"></textarea>
+</div><div id="p3" class="page">
+  <h3>رف 3</h3>
+  <textarea oninput="save('p3')" id="p3data"></textarea>
+</div><div id="p4" class="page">
+  <h3>الأكل الأساسي</h3>
+  <textarea oninput="save('p4')" id="p4data"></textarea>
+</div><div id="veg" class="page">
+  <h3>الخضروات المتاحة</h3>
+  <textarea oninput="save('veg')" id="vegdata"></textarea>
+</div><div id="fruit" class="page">
+  <h3>الفواكه المتاحة</h3>
+  <textarea oninput="save('fruit')" id="fruitdata"></textarea>
+</div><div id="need" class="page">
+  <h3>الأكل المطلوب</h3>
+  <textarea oninput="save('need')" id="needdata"></textarea>
+</div><div id="med" class="page">
+  <h3>الأدوية المتوفرة</h3>
+  <textarea oninput="save('med')" id="meddata"></textarea>
+</div></div><script>
+
+// تسجيل الدخول
+function login(){
+  let p = document.getElementById("pass").value;
+  if(p === "1234"){
+    document.getElementById("login").style.display="none";
+    document.getElementById("app").style.display="block";
+    load();
+  }else{
+    alert("❌ باسورد غلط");
+  }
+}
+
+// تغيير الصفحات
+function showPage(id){
+  let pages = document.querySelectorAll('.page');
+  pages.forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// حفظ تلقائي
+function save(key){
+  let value = document.getElementById(key+"data").value;
+  localStorage.setItem(key,value);
+}
+
+// تحميل البيانات
+function load(){
+  let keys = ['p1','p2','p3','p4','veg','fruit','need','med'];
+  keys.forEach(k=>{
+    let data = localStorage.getItem(k);
+    if(data){
+      document.getElementById(k+"data").value = data;
+    }
+  });
+}
+
+</script></body>
+</html>
